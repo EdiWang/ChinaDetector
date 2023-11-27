@@ -5,6 +5,8 @@ VisualStudioVersion = 17.8.34316.72
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edi.ChinaDetector", "Edi.ChinaDetector\Edi.ChinaDetector.csproj", "{EA27795F-8052-416C-A110-9B923C4853CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edi.ChinaDetector.Tests", "Edi.ChinaDetector.Tests\Edi.ChinaDetector.Tests.csproj", "{AF943726-1F52-4E2D-A7E5-61219889E0EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{EA27795F-8052-416C-A110-9B923C4853CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA27795F-8052-416C-A110-9B923C4853CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA27795F-8052-416C-A110-9B923C4853CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF943726-1F52-4E2D-A7E5-61219889E0EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF943726-1F52-4E2D-A7E5-61219889E0EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF943726-1F52-4E2D-A7E5-61219889E0EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF943726-1F52-4E2D-A7E5-61219889E0EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
