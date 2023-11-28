@@ -7,13 +7,13 @@ namespace Edi.ChinaDetector;
 
 public class ChinaDetectService(HttpClient httpClient) : IChinaDetectService
 {
-    public async Task<ChinaDetectResult> Detect(DetectionMethod method)
+    public async Task<ChinaDetectResult> Detect(DetectionMethod method, RegionInfo regionInfo = null)
     {
         var result = new ChinaDetectResult();
 
         if (method.HasFlag(DetectionMethod.TimeZone))
         {
-            var r1 = DetectByTimeZone();
+            var r1 = DetectByTimeZone(regionInfo?.TargetTimeZone);
             result.Rank += r1;
 
             if (r1 > 0) result.PositiveMethod |= DetectionMethod.Culture;
@@ -21,7 +21,7 @@ public class ChinaDetectService(HttpClient httpClient) : IChinaDetectService
 
         if (method.HasFlag(DetectionMethod.Culture))
         {
-            var r2 = DetectByCulture();
+            var r2 = DetectByCulture(regionInfo?.TargetCulture, regionInfo?.TargetUICulture);
             result.Rank += r2;
 
             if (r2 > 0) result.PositiveMethod |= DetectionMethod.Culture;
@@ -50,10 +50,12 @@ public class ChinaDetectService(HttpClient httpClient) : IChinaDetectService
         return result;
     }
 
-    private static int DetectByTimeZone()
+    private static int DetectByTimeZone(TimeZoneInfo timeZone)
     {
-        if (TimeZoneInfo.Local.Id == "China Standard Time" ||
-            TimeZoneInfo.Local.StandardName.Contains("china", StringComparison.CurrentCultureIgnoreCase))
+        timeZone ??= TimeZoneInfo.Local;
+
+        if (timeZone.Id == "China Standard Time" ||
+            timeZone.StandardName.Contains("china", StringComparison.CurrentCultureIgnoreCase))
         {
             return 1;
         }
@@ -61,22 +63,25 @@ public class ChinaDetectService(HttpClient httpClient) : IChinaDetectService
         return 0;
     }
 
-    private static int DetectByCulture()
+    private static int DetectByCulture(CultureInfo culture = null, CultureInfo uiCulture = null)
     {
+        culture ??= CultureInfo.CurrentCulture;
+        uiCulture ??= CultureInfo.CurrentUICulture;
+
         int rank = 0;
 
-        if (CultureInfo.CurrentCulture.Name == "zh-CN" ||
-            CultureInfo.CurrentCulture.Name == "zh-Hans" ||
-            CultureInfo.CurrentCulture.Name == "zh-Hans-CN" ||
-            CultureInfo.CurrentCulture.EnglishName.ToLowerInvariant().Contains("china"))
+        if (culture.Name == "zh-CN" ||
+            culture.Name == "zh-Hans" ||
+            culture.Name == "zh-Hans-CN" ||
+            culture.EnglishName.Contains("china", StringComparison.InvariantCultureIgnoreCase))
         {
             rank++;
         }
 
-        if (CultureInfo.CurrentUICulture.Name == "zh-CN" ||
-            CultureInfo.CurrentUICulture.Name == "zh-Hans" ||
-            CultureInfo.CurrentUICulture.Name == "zh-Hans-CN" ||
-            CultureInfo.CurrentUICulture.EnglishName.ToLowerInvariant().Contains("china"))
+        if (uiCulture.Name == "zh-CN" ||
+            uiCulture.Name == "zh-Hans" ||
+            uiCulture.Name == "zh-Hans-CN" ||
+            uiCulture.EnglishName.Contains("china", StringComparison.InvariantCultureIgnoreCase))
         {
             rank++;
         }
@@ -133,6 +138,7 @@ public class ChinaDetectService(HttpClient httpClient) : IChinaDetectService
         return rank;
     }
 }
+
 
 public class GeoIPResult
 {
