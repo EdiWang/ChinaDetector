@@ -44,30 +44,7 @@ public class OnlineChinaDetectService(HttpClient httpClient) : IChinaDetectServi
         return result;
     }
 
-    private async Task<(int Rank, string IPAddress)> DetectByIPAddress(HttpClient httpClient)
-    {
-        int rank = 0;
-        string ip = null;
-
-        try
-        {
-            const string geoIpServiceUrl = "http://ip-api.com/json/";
-            var response = await httpClient.GetFromJsonAsync<GeoIPResult>(geoIpServiceUrl);
-
-            ip = response.Query;
-            if (response.CountryCode == "CN") rank++;
-        }
-        catch (HttpRequestException)
-        {
-            rank++;
-        }
-        catch (Exception)
-        {
-            rank++;
-        }
-
-        return (rank, ip);
-    }
+    private Task<(int Rank, string IPAddress)> DetectByIPAddress(HttpClient httpClient) => new IPChinaDetector(httpClient).Detect();
 
     private static async Task<int> DetectByGFWTest()
     {
