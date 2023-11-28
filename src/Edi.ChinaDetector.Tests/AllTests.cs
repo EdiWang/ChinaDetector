@@ -95,12 +95,12 @@ public class AllTests
     }
 
     [Test]
-    public async Task DetectTimeZoneAndCultureBothPositive()
+    public async Task DetectAllOfflineBothPositive()
     {
         var httpClient = new HttpClient();
         var service = new ChinaDetectService(httpClient);
 
-        var result = await service.Detect(DetectionMethod.TimeZone | DetectionMethod.Culture, new()
+        var result = await service.Detect(DetectionMethod.AllOffline, new()
         {
             TargetTimeZone = TimeZoneInfo.FindSystemTimeZoneById("China Standard Time"),
             TargetCulture = CultureInfo.GetCultureInfo("zh-CN"),

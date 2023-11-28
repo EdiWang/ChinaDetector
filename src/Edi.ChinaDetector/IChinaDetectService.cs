@@ -13,7 +13,11 @@ public enum DetectionMethod : int
     TimeZone = 1,
     Culture = 2,
     IPAddress = 4,
-    GFWTest = 8
+    GFWTest = 8,
+
+    AllOffline = TimeZone | Culture,
+    AllOnline = IPAddress | GFWTest,
+    All = TimeZone | Culture | IPAddress | GFWTest
 }
 
 public class ChinaDetectResult
