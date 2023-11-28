@@ -5,13 +5,12 @@ using NUnit.Framework;
 namespace Edi.ChinaDetector.Tests;
 
 [TestFixture]
-public class AllTests
+public class OfflineChinaDetectServiceTests
 {
     [Test]
     public async Task DetectTimeZonePositive()
     {
-        var httpClient = new HttpClient();
-        var service = new ChinaDetectService(httpClient);
+        var service = new OfflineChinaDetectService();
 
         var result = await service.Detect(DetectionMethod.TimeZone, new()
         {
@@ -27,8 +26,7 @@ public class AllTests
     [Test]
     public async Task DetectTimeZoneNegative()
     {
-        var httpClient = new HttpClient();
-        var service = new ChinaDetectService(httpClient);
+        var service = new OfflineChinaDetectService();
 
         var result = await service.Detect(DetectionMethod.TimeZone, new()
         {
@@ -43,8 +41,7 @@ public class AllTests
     [Test]
     public async Task DetectCulturePositive()
     {
-        var httpClient = new HttpClient();
-        var service = new ChinaDetectService(httpClient);
+        var service = new OfflineChinaDetectService();
 
         var result = await service.Detect(DetectionMethod.Culture, new()
         {
@@ -61,8 +58,7 @@ public class AllTests
     [Test]
     public async Task DetectUICulturePositive()
     {
-        var httpClient = new HttpClient();
-        var service = new ChinaDetectService(httpClient);
+        var service = new OfflineChinaDetectService();
 
         var result = await service.Detect(DetectionMethod.Culture, new()
         {
@@ -79,8 +75,7 @@ public class AllTests
     [Test]
     public async Task DetectCultureBothPositive()
     {
-        var httpClient = new HttpClient();
-        var service = new ChinaDetectService(httpClient);
+        var service = new OfflineChinaDetectService();
 
         var result = await service.Detect(DetectionMethod.Culture, new()
         {
@@ -97,8 +92,7 @@ public class AllTests
     [Test]
     public async Task DetectAllOfflineBothPositive()
     {
-        var httpClient = new HttpClient();
-        var service = new ChinaDetectService(httpClient);
+        var service = new OfflineChinaDetectService();
 
         var result = await service.Detect(DetectionMethod.AllOffline, new()
         {
