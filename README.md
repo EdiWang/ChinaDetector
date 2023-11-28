@@ -48,13 +48,25 @@ await service.Detect(DetectionMethod.AllOffline);
 
 ### Online Detection
 
+Note
+
+- In China, IP address or GFW test is not a reliable way to detect if the machine is in China mainland, because many users are using VPN or proxy to access the Internet. Please use it in conjunction with offline detection.
+
+- In reality, please use HttpClientFactory or Typed HttpClient to create HttpClient as a best practice in .NET.
+
 #### By IP
 
-TODO
+```csharp
+var service = new OnlineChinaDetectService(new HttpClient());
+await service.Detect(DetectionMethod.IPAddress);
+```
 
 #### By GFW test
 
-TODO
+```csharp
+var service = new OnlineChinaDetectService(new HttpClient());
+await service.Detect(DetectionMethod.GFWTest);
+```
 
 ### Dependency Injection
 
