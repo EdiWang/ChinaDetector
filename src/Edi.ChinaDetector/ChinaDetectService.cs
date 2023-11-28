@@ -9,14 +9,14 @@ public class ChinaDetectService(HttpClient httpClient) : IChinaDetectService
 {
     public async Task<ChinaDetectResult> Detect(DetectionMethod method, RegionInfo regionInfo = null)
     {
-        var result = new ChinaDetectResult();
+        var result = new ChinaDetectResult { PositiveMethods = new() };
 
         if (method.HasFlag(DetectionMethod.TimeZone))
         {
             var r1 = DetectByTimeZone(regionInfo?.TargetTimeZone);
             result.Rank += r1;
 
-            if (r1 > 0) result.PositiveMethod |= DetectionMethod.Culture;
+            if (r1 > 0) result.PositiveMethods.Add(DetectionMethod.TimeZone);
         }
 
         if (method.HasFlag(DetectionMethod.Culture))
@@ -24,7 +24,7 @@ public class ChinaDetectService(HttpClient httpClient) : IChinaDetectService
             var r2 = DetectByCulture(regionInfo?.TargetCulture, regionInfo?.TargetUICulture);
             result.Rank += r2;
 
-            if (r2 > 0) result.PositiveMethod |= DetectionMethod.Culture;
+            if (r2 > 0) result.PositiveMethods.Add(DetectionMethod.Culture);
         }
 
         if (method.HasFlag(DetectionMethod.IPAddress))
@@ -34,7 +34,7 @@ public class ChinaDetectService(HttpClient httpClient) : IChinaDetectService
 
             if (r3.Rank > 0)
             {
-                result.PositiveMethod |= DetectionMethod.IPAddress;
+                result.PositiveMethods.Add(DetectionMethod.IPAddress);
                 result.IPAddress = r3.IPAddress;
             }
         }
@@ -44,7 +44,7 @@ public class ChinaDetectService(HttpClient httpClient) : IChinaDetectService
             var r4 = await DetectByGFWTest();
             result.Rank += r4;
 
-            if (r4 > 0) result.PositiveMethod |= DetectionMethod.GFWTest;
+            if (r4 > 0) result.PositiveMethods.Add(DetectionMethod.GFWTest);
         }
 
         return result;

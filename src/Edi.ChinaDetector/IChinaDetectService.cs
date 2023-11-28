@@ -10,16 +10,16 @@ public interface IChinaDetectService
 [Flags]
 public enum DetectionMethod : int
 {
-    TimeZone,
-    Culture,
-    IPAddress,
-    GFWTest
+    TimeZone = 1,
+    Culture = 2,
+    IPAddress = 4,
+    GFWTest = 8
 }
 
 public class ChinaDetectResult
 {
     public int Rank { get; set; }
-    public DetectionMethod? PositiveMethod { get; set; }
+    public List<DetectionMethod> PositiveMethods { get; set; }
     public string IPAddress { get; set; }
 }
 
