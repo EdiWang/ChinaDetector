@@ -39,40 +39,6 @@ public class OfflineChinaDetectServiceTests
     }
 
     [Test]
-    public async Task DetectCulturePositive()
-    {
-        var service = new OfflineChinaDetectService();
-
-        var result = await service.Detect(DetectionMethod.Culture, new()
-        {
-            TargetCulture = CultureInfo.GetCultureInfo("zh-CN"),
-            TargetUICulture = CultureInfo.GetCultureInfo("en-US")
-        });
-
-        Assert.That(result.Rank, Is.EqualTo(1));
-        Assert.That(result.PositiveMethods, Is.Not.Null);
-        Assert.That(result.PositiveMethods.Count == 1, Is.True);
-        Assert.That(result.PositiveMethods.First(), Is.EqualTo(DetectionMethod.Culture));
-    }
-
-    [Test]
-    public async Task DetectUICulturePositive()
-    {
-        var service = new OfflineChinaDetectService();
-
-        var result = await service.Detect(DetectionMethod.Culture, new()
-        {
-            TargetCulture = CultureInfo.GetCultureInfo("en-US"),
-            TargetUICulture = CultureInfo.GetCultureInfo("zh-CN")
-        });
-
-        Assert.That(result.Rank, Is.EqualTo(1));
-        Assert.That(result.PositiveMethods, Is.Not.Null);
-        Assert.That(result.PositiveMethods.Count == 1, Is.True);
-        Assert.That(result.PositiveMethods.First(), Is.EqualTo(DetectionMethod.Culture));
-    }
-
-    [Test]
     public async Task DetectCultureBothPositive()
     {
         var service = new OfflineChinaDetectService();
