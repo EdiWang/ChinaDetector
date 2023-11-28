@@ -93,4 +93,22 @@ public class AllTests
         Assert.That(result.PositiveMethods.Count == 1, Is.True);
         Assert.That(result.PositiveMethods.First(), Is.EqualTo(DetectionMethod.Culture));
     }
+
+    [Test]
+    public async Task DetectTimeZoneAndCultureBothPositive()
+    {
+        var httpClient = new HttpClient();
+        var service = new ChinaDetectService(httpClient);
+
+        var result = await service.Detect(DetectionMethod.TimeZone | DetectionMethod.Culture, new()
+        {
+            TargetTimeZone = TimeZoneInfo.FindSystemTimeZoneById("China Standard Time"),
+            TargetCulture = CultureInfo.GetCultureInfo("zh-CN"),
+            TargetUICulture = CultureInfo.GetCultureInfo("zh-CN")
+        });
+
+        Assert.That(result.Rank, Is.EqualTo(3));
+        Assert.That(result.PositiveMethods, Is.Not.Null);
+        Assert.That(result.PositiveMethods.Count == 2, Is.True);
+    }
 }
