@@ -1,6 +1,5 @@
-﻿using System.Globalization;
-using Moq;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using System.Globalization;
 
 namespace Edi.ChinaDetector.Tests;
 

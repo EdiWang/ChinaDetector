@@ -1,7 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Net;
-using System.Net.Http.Json;
-using System.Net.Sockets;
 
 namespace Edi.ChinaDetector;
 
@@ -46,29 +43,7 @@ public class OnlineChinaDetectService(HttpClient httpClient) : IChinaDetectServi
 
     private Task<(int Rank, string IPAddress)> DetectByIPAddress(HttpClient httpClient) => new IPChinaDetector(httpClient).Detect();
 
-    private static async Task<int> DetectByGFWTest()
-    {
-        int rank = 0;
-
-        try
-        {
-            var ip = (await Dns.GetHostAddressesAsync("www.google.com"))[0];
-            if (ip.AddressFamily == AddressFamily.InterNetwork && ip.ToString().StartsWith("172.217."))
-            {
-                rank++;
-            }
-        }
-        catch (SocketException)
-        {
-            rank++;
-        }
-        catch (Exception)
-        {
-            rank++;
-        }
-
-        return rank;
-    }
+    private static Task<int> DetectByGFWTest() => GFWChinaDetector.Detect();
 }
 
 public class GeoIPResult
