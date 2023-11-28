@@ -93,3 +93,10 @@ public class OnlineChinaDetectService(HttpClient httpClient) : IChinaDetectServi
         return rank;
     }
 }
+
+public class GeoIPResult
+{
+    public string CountryCode { get; set; }
+
+    public string Query { get; set; }
+}

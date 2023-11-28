@@ -25,12 +25,7 @@ public class OfflineChinaDetectService : IChinaDetectService
             if (r2 > 0) result.PositiveMethods.Add(DetectionMethod.Culture);
         }
 
-        if (method.HasFlag(DetectionMethod.IPAddress))
-        {
-            throw new InvalidEnumArgumentException("Please use OnlineChinaDetectService");
-        }
-
-        if (method.HasFlag(DetectionMethod.GFWTest))
+        if (method.HasFlag(DetectionMethod.IPAddress) || method.HasFlag(DetectionMethod.GFWTest))
         {
             throw new InvalidEnumArgumentException("Please use OnlineChinaDetectService");
         }
@@ -40,36 +35,5 @@ public class OfflineChinaDetectService : IChinaDetectService
 
     private static int DetectByTimeZone(TimeZoneInfo timeZone) => new TimeZoneChinaDetector(timeZone).Detect();
 
-    private static int DetectByCulture(CultureInfo culture = null, CultureInfo uiCulture = null)
-    {
-        culture ??= CultureInfo.CurrentCulture;
-        uiCulture ??= CultureInfo.CurrentUICulture;
-
-        int rank = 0;
-
-        if (culture.Name == "zh-CN" ||
-            culture.Name == "zh-Hans" ||
-            culture.Name == "zh-Hans-CN" ||
-            culture.EnglishName.Contains("china", StringComparison.InvariantCultureIgnoreCase))
-        {
-            rank++;
-        }
-
-        if (uiCulture.Name == "zh-CN" ||
-            uiCulture.Name == "zh-Hans" ||
-            uiCulture.Name == "zh-Hans-CN" ||
-            uiCulture.EnglishName.Contains("china", StringComparison.InvariantCultureIgnoreCase))
-        {
-            rank++;
-        }
-
-        return rank;
-    }
-}
-
-public class GeoIPResult
-{
-    public string CountryCode { get; set; }
-
-    public string Query { get; set; }
+    private static int DetectByCulture(CultureInfo culture = null, CultureInfo uiCulture = null) => new CultureChinaDetector(culture, uiCulture).Detect();
 }
