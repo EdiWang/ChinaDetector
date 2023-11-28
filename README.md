@@ -37,5 +37,16 @@ var service = new OfflineChinaDetectService();
 var result = await service.Detect(DetectionMethod.TimeZone | DetectionMethod.Culture);
 ```
 
+### Online Detection
+
+#### By IP
+
+TODO
+
+#### By GFW test
+
+TODO
+
 ### Dependency Injection
 
+Coming in next release
