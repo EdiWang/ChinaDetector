@@ -1,7 +1,7 @@
-using System.Net;
 using Moq;
-using NUnit.Framework;
 using Moq.Protected;
+using NUnit.Framework;
+using System.Net;
 
 namespace Edi.ChinaDetector.Tests;
 
