@@ -1,6 +1,23 @@
 ﻿@page
-@model IndexModel
+@using System.Globalization
+@using Edi.ChinaDetector
+@{
+    var offlineDetector = new OfflineChinaDetectService();
+    var tzResult = await offlineDetector.Detect(DetectionMethod.TimeZone);
+    var culResult = await offlineDetector.Detect(DetectionMethod.Culture);
+}
+
 
 <div class="text-center">
     <h1 class="display-4">ChinaDetector.TestWeb</h1>
+    
+    <h2>Offline Detector</h2>
+
+    OfflineChinaDetectService.Detect(DetectionMethod.TimeZone): @tzResult.Rank <br />
+    OfflineChinaDetectService.Detect(DetectionMethod.Culture): @culResult.Rank <br />
+
+    Local Time: @DateTime.Now <br />
+    Time Zone: @TimeZoneInfo.Local.Id / @TimeZoneInfo.Local.StandardName <br />
+    CultureInfo.CurrentCulture: @CultureInfo.CurrentCulture <br />
+    CultureInfo.CurrentUICulture: @CultureInfo.CurrentUICulture <br />
 </div>
