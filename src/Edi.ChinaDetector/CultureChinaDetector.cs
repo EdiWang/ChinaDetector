@@ -65,6 +65,7 @@ public class CultureChinaDetector(CultureInfo culture = null, CultureInfo uiCult
                 else
                 {
                     // DISM failed (mostly because program is not running as admin)
+                    // A lot of Chinese people like to run programs as admin and disable UAC, so this is a good indicator
                     Debug.WriteLine($"DISM failed with exit code {process.ExitCode}");
                 }
             }
