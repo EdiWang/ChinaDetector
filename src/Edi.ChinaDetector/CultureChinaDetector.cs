@@ -1,10 +1,13 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Edi.ChinaDetector;
 
 public class CultureChinaDetector(CultureInfo culture = null, CultureInfo uiCulture = null)
 {
-    public int Detect()
+    public async Task<int> Detect()
     {
         culture ??= CultureInfo.CurrentCulture;
         uiCulture ??= CultureInfo.CurrentUICulture;
@@ -27,6 +30,47 @@ public class CultureChinaDetector(CultureInfo culture = null, CultureInfo uiCult
             rank++;
         }
 
+        if (rank == 0)
+        {
+            // User is extremely cunning and sly, try more sick method to detect if he/she is from China
+
+            // Try using DISM to get system locale info (Windows only)
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                var psi = new ProcessStartInfo
+                {
+                    FileName = "dism.exe",
+                    Arguments = "/online /get-intl",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true,
+                    StandardOutputEncoding = Encoding.UTF8
+                };
+
+                using Process process = new();
+                process.StartInfo = psi;
+                process.Start();
+
+                string output = await process.StandardOutput.ReadToEndAsync();
+                await process.WaitForExitAsync();
+
+                if (process.ExitCode == 0)
+                {
+                    if (output.Contains("zh-CN", StringComparison.InvariantCultureIgnoreCase) ||
+                        output.Contains("zh-Hans", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        rank++;
+                    }
+                }
+                else
+                {
+                    // DISM failed (mostly because program is not running as admin)
+                    Debug.WriteLine($"DISM failed with exit code {process.ExitCode}");
+                }
+            }
+        }
+
         return rank;
     }
+
 }

@@ -7,53 +7,53 @@ namespace Edi.ChinaDetector.Tests;
 public class CultureChinaDetectorTests
 {
     [Test]
-    public void DetectPositiveCulture()
+    public async Task DetectPositiveCulture()
     {
         var cul = CultureInfo.GetCultureInfo("zh-CN");
         var uiCul = CultureInfo.GetCultureInfo("en-US");
 
         var detector = new CultureChinaDetector(cul, uiCul);
 
-        var result = detector.Detect();
+        var result = await detector.Detect();
 
         Assert.That(result, Is.EqualTo(1));
     }
 
     [Test]
-    public void DetectPositiveBoth()
+    public async Task DetectPositiveBoth()
     {
         var cul = CultureInfo.GetCultureInfo("zh-CN");
         var uiCul = CultureInfo.GetCultureInfo("zh-CN");
 
         var detector = new CultureChinaDetector(cul, uiCul);
 
-        var result = detector.Detect();
+        var result = await detector.Detect();
 
         Assert.That(result, Is.EqualTo(2));
     }
 
     [Test]
-    public void DetectPositiveUICulture()
+    public async Task DetectPositiveUICulture()
     {
         var cul = CultureInfo.GetCultureInfo("en-US");
         var uiCul = CultureInfo.GetCultureInfo("zh-CN");
 
         var detector = new CultureChinaDetector(cul, uiCul);
 
-        var result = detector.Detect();
+        var result = await detector.Detect();
 
         Assert.That(result, Is.EqualTo(1));
     }
 
     [Test]
-    public void DetectNegative()
+    public async Task DetectNegative()
     {
         var cul = CultureInfo.GetCultureInfo("en-US");
         var uiCul = CultureInfo.GetCultureInfo("en-US");
 
         var detector = new CultureChinaDetector(cul, uiCul);
 
-        var result = detector.Detect();
+        var result = await detector.Detect();
 
         Assert.That(result, Is.EqualTo(0));
     }
