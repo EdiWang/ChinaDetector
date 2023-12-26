@@ -12,12 +12,12 @@ public enum DetectionMethod : int
 {
     TimeZone = 1,
     Culture = 2,
-    IPAddress = 4,
-    GFWTest = 8,
+    Behavior = 4,
+    IPAddress = 8,
+    GFWTest = 16,
 
-    AllOffline = TimeZone | Culture,
-    AllOnline = IPAddress | GFWTest,
-    All = TimeZone | Culture | IPAddress | GFWTest
+    AllOffline = TimeZone | Culture | Behavior,
+    AllOnline = IPAddress | GFWTest
 }
 
 public class ChinaDetectResult

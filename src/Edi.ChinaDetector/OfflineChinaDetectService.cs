@@ -25,6 +25,14 @@ public class OfflineChinaDetectService : IChinaDetectService
             if (r2 > 0) result.PositiveMethods.Add(DetectionMethod.Culture);
         }
 
+        if (method.HasFlag(DetectionMethod.Behavior))
+        {
+            var r3 = DetectByBehavior();
+            result.Rank += r3;
+
+            if (r3 > 0) result.PositiveMethods.Add(DetectionMethod.Behavior);
+        }
+
         if (method.HasFlag(DetectionMethod.IPAddress) || method.HasFlag(DetectionMethod.GFWTest))
         {
             throw new InvalidEnumArgumentException("Please use OnlineChinaDetectService");
@@ -36,4 +44,6 @@ public class OfflineChinaDetectService : IChinaDetectService
     private static int DetectByTimeZone(TimeZoneInfo timeZone) => new TimeZoneChinaDetector(timeZone).Detect();
 
     private static async Task<int> DetectByCulture(CultureInfo culture = null, CultureInfo uiCulture = null) => await new CultureChinaDetector(culture, uiCulture).Detect();
+
+    private static int DetectByBehavior() => new BehaviorChinaDetector().Detect();
 }

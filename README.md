@@ -44,7 +44,14 @@ var service = new OfflineChinaDetectService();
 var result = await service.Detect(DetectionMethod.Culture);
 ```
 
-#### Both
+#### By behavior
+
+```csharp
+var service = new OfflineChinaDetectService();
+var result = await service.Detect(DetectionMethod.Behavior);
+```
+
+#### Multiple
 
 ```csharp
 var service = new OfflineChinaDetectService();
