@@ -30,7 +30,15 @@ public class BehaviorChinaDetector
             {
                 // User is extremely cunning and sly, try more sick method to detect if he/she is from China
                 var installedPrograms = InstalledPrograms.GetInstalledPrograms();
-                string[] chineseProgramKeyWords = { "tencent", "baidu", "360" };
+                string[] chineseProgramKeyWords =
+                {
+                    "tencent", "baidu", "360",
+                    "腾讯", "百度", "阿里", "网易", "迅雷", "搜狗", "钉钉",
+                    "安全", "杀毒", "管家", "金山", "卫士", "爱奇艺", "优酷",
+                    "好压", "浏览器", "向日葵", "远控", "微信", "WPS", "直播",
+                    "游戏", "视频", "音乐", "影音", "影视", "播放器", "输入法",
+                    "拼音", "助手", "看图", "翻译", "抖音"
+                };
 
                 hasChineseApps = installedPrograms.Any(p => chineseProgramKeyWords.Any(k => p.ToLower().Contains(k)));
 
