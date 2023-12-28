@@ -20,7 +20,7 @@ public class OnlineChinaDetectService(HttpClient httpClient) : IChinaDetectServi
 
         if (method.HasFlag(DetectionMethod.IPAddress))
         {
-            var r3 = await DetectByIPAddress(httpClient);
+            var r3 = await DetectByIPAddress();
             result.Rank += r3.Rank;
 
             if (r3.Rank > 0)
@@ -41,9 +41,9 @@ public class OnlineChinaDetectService(HttpClient httpClient) : IChinaDetectServi
         return result;
     }
 
-    private Task<(int Rank, string IPAddress)> DetectByIPAddress(HttpClient httpClient) => new IPChinaDetector(httpClient).Detect();
+    private Task<(int Rank, string IPAddress)> DetectByIPAddress() => new IPChinaDetector(httpClient).Detect();
 
-    private static Task<int> DetectByGFWTest() => GFWChinaDetector.Detect();
+    private Task<int> DetectByGFWTest() => new GFWChinaDetector(httpClient).Detect();
 }
 
 public class GeoIPResult
