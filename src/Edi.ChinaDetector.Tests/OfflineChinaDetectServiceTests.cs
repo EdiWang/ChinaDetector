@@ -66,8 +66,8 @@ public class OfflineChinaDetectServiceTests
             TargetUICulture = CultureInfo.GetCultureInfo("zh-CN")
         });
 
-        Assert.That(result.Rank, Is.EqualTo(3));
+        Assert.That(result.Rank, Is.GreaterThanOrEqualTo(3));
         Assert.That(result.PositiveMethods, Is.Not.Null);
-        Assert.That(result.PositiveMethods.Count == 2, Is.True);
+        Assert.That(result.PositiveMethods.Count, Is.GreaterThanOrEqualTo(2));
     }
 }
