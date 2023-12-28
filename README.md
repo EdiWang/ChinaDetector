@@ -75,14 +75,34 @@ Note
 #### By IP
 
 ```csharp
-var service = new OnlineChinaDetectService(new HttpClient());
+var handler = new HttpClientHandler
+{
+    UseProxy = false
+};
+
+var httpClient = new HttpClient(handler)
+{
+    Timeout = TimeSpan.FromSeconds(5)
+};
+
+var service = new OnlineChinaDetectService(httpClient);
 await service.Detect(DetectionMethod.IPAddress);
 ```
 
 #### By GFW test
 
 ```csharp
-var service = new OnlineChinaDetectService(new HttpClient());
+var handler = new HttpClientHandler
+{
+    UseProxy = false
+};
+
+var httpClient = new HttpClient(handler)
+{
+    Timeout = TimeSpan.FromSeconds(5)
+};
+
+var service = new OnlineChinaDetectService(httpClient);
 await service.Detect(DetectionMethod.GFWTest);
 ```
 
