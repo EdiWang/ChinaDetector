@@ -15,9 +15,10 @@ public enum DetectionMethod : int
     Behavior = 4,
     IPAddress = 8,
     GFWTest = 16,
+    NetworkGateway = 32,
 
     AllOffline = TimeZone | Culture | Behavior,
-    AllOnline = IPAddress | GFWTest
+    AllOnline = IPAddress | GFWTest | NetworkGateway
 }
 
 public class ChinaDetectResult

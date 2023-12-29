@@ -38,12 +38,22 @@ public class OnlineChinaDetectService(HttpClient httpClient) : IChinaDetectServi
             if (r4 > 0) result.PositiveMethods.Add(DetectionMethod.GFWTest);
         }
 
+        if (method.HasFlag(DetectionMethod.NetworkGateway))
+        {
+            var r5 = DetectByNetworkGateway();
+            result.Rank += r5;
+
+            if (r5 > 0) result.PositiveMethods.Add(DetectionMethod.NetworkGateway);
+        }
+
         return result;
     }
 
     private Task<(int Rank, string IPAddress)> DetectByIPAddress() => new IPChinaDetector(httpClient).Detect();
 
     private Task<int> DetectByGFWTest() => new GFWChinaDetector(httpClient).Detect();
+
+    private int DetectByNetworkGateway() => new NetworkGatewayChinaDetector().Detect("127.0.0.1");
 }
 
 public class GeoIPResult
