@@ -30,6 +30,11 @@ public class CultureChinaDetector(CultureInfo culture = null, CultureInfo uiCult
             rank++;
         }
 
+        if (Environment.MachineName.Any(c => c >= 0x4e00 && c <= 0x9fff))
+        {
+            rank++;
+        }
+
         if (rank == 0)
         {
             // User is extremely cunning and sly, try more sick method to detect if he/she is from China
