@@ -5,12 +5,13 @@
     var offlineDetector = new OfflineChinaDetectService();
     var tzResult = await offlineDetector.Detect(DetectionMethod.TimeZone);
     var culResult = await offlineDetector.Detect(DetectionMethod.Culture);
+    var bhResult = await offlineDetector.Detect(DetectionMethod.Behavior);
 }
 
 <div class="container">
     <h1 class="display-4">ChinaDetector.TestWeb</h1>
 
-    <h2>Offline Detector</h2>
+    <h2>Offline Detectors</h2>
 
     <table class="table table-bordered">
         <thead>
@@ -21,13 +22,41 @@
         </thead>
         <tbody>
             <tr>
-                <td>Detect(DetectionMethod.TimeZone)</td>
+                <td><code>Detect(DetectionMethod.TimeZone)</code></td>
                 <td class="@(tzResult.Rank > 0 ? "text-danger" : null)">@tzResult.Rank</td>
             </tr>
             <tr>
-                <td>Detect(DetectionMethod.Culture)</td>
+                <td><code>Detect(DetectionMethod.Culture)</code></td>
                 <td class="@(culResult.Rank > 0 ? "text-danger" : null)">@culResult.Rank</td>
             </tr>
+            <tr>
+                <td><code>Detect(DetectionMethod.Behavior)</code></td>
+                <td class="@(bhResult.Rank > 0 ? "text-danger" : null)">@bhResult.Rank</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Online Detectors</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Method</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <h2>Debug Information</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
             <tr>
                 <td>Local Time</td>
                 <td>@DateTime.Now</td>
