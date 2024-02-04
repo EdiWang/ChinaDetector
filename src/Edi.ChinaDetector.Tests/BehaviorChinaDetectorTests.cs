@@ -14,4 +14,14 @@ public class BehaviorChinaDetectorTests
 
         Assert.Pass();
     }
+
+    [Test]
+    public async Task DetectNpm_ShouldReturnRank()
+    {
+        var detector = new NpmChinaDetector();
+
+        var rank = await detector.Detect();
+
+        Assert.Pass();
+    }
 }

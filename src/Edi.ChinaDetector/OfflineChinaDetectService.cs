@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
+using System.Runtime.InteropServices;
 
 namespace Edi.ChinaDetector;
 
@@ -30,7 +31,10 @@ public class OfflineChinaDetectService : IChinaDetectService
             var r3 = DetectByBehavior();
             result.Rank += r3;
 
-            if (r3 > 0) result.PositiveMethods.Add(DetectionMethod.Behavior);
+            var r4 = await DetectByNpm();
+            result.Rank += r4;
+
+            if (r3 > 0 || r4 > 0) result.PositiveMethods.Add(DetectionMethod.Behavior);
         }
 
         if (method.HasFlag(DetectionMethod.IPAddress) || method.HasFlag(DetectionMethod.GFWTest))
@@ -46,4 +50,6 @@ public class OfflineChinaDetectService : IChinaDetectService
     private static async Task<int> DetectByCulture(CultureInfo culture = null, CultureInfo uiCulture = null) => await new CultureChinaDetector(culture, uiCulture).Detect();
 
     private static int DetectByBehavior() => new BehaviorChinaDetector().Detect();
+
+    private static async Task<int> DetectByNpm() => await new NpmChinaDetector().Detect();
 }
