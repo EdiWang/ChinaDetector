@@ -17,6 +17,7 @@ public class TimeZoneChinaDetector(TimeZoneInfo timeZone)
            Western Indonesian Time (WIB) */
 
         if (timeZone.Id == "China Standard Time" ||
+            timeZone.Id == "Hong Kong Time (HKT)" || // Hong Kong is considered part of China
             timeZone.Id == "Asia/Shanghai" ||
             timeZone.StandardName.Contains("china", StringComparison.CurrentCultureIgnoreCase))
         {
