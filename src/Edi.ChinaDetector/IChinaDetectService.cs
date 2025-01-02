@@ -4,7 +4,7 @@ namespace Edi.ChinaDetector;
 
 public interface IChinaDetectService
 {
-    public Task<ChinaDetectResult> Detect(DetectionMethod method, RegionInfo regionInfo = null);
+    public Task<ChinaDetectResult> Detect(DetectionMethod method, RegionInfo regionInfo = null, bool includeHKTW = false);
 }
 
 [Flags]

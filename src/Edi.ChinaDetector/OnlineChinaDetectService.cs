@@ -4,7 +4,7 @@ namespace Edi.ChinaDetector;
 
 public class OnlineChinaDetectService(HttpClient httpClient) : IChinaDetectService
 {
-    public async Task<ChinaDetectResult> Detect(DetectionMethod method, RegionInfo regionInfo = null)
+    public async Task<ChinaDetectResult> Detect(DetectionMethod method, RegionInfo regionInfo = null, bool includeHKTW = false)
     {
         var result = new ChinaDetectResult { PositiveMethods = new() };
 

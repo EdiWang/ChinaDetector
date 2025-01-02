@@ -8,7 +8,7 @@
         <PackageTags>China</PackageTags>
         <PackageProjectUrl>https://edi.wang</PackageProjectUrl>
         <RepositoryUrl>https://github.com/EdiWang/ChinaDetector</RepositoryUrl>
-        <Version>1.2.251</Version>
+        <Version>1.3.251</Version>
         <Description>Detect if current code is running on China machine</Description>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>

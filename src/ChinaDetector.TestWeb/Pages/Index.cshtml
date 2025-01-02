@@ -3,7 +3,7 @@
 @using Edi.ChinaDetector
 @{
     var offlineDetector = new OfflineChinaDetectService();
-    var tzResult = await offlineDetector.Detect(DetectionMethod.TimeZone);
+    var tzResult = await offlineDetector.Detect(DetectionMethod.TimeZone, includeHKTW: true);
     var culResult = await offlineDetector.Detect(DetectionMethod.Culture);
     var bhResult = await offlineDetector.Detect(DetectionMethod.Behavior);
 }

@@ -28,6 +28,7 @@ For example, the +8 time zone also includes the following time zone names:
 - Australian Western Standard Time (AWST)
 - Singapore Time (SGT)
 - Hong Kong Time (HKT)
+- Taiwan Standard Time (TST)
 - Malaysia Time (MYT)
 - Philippine Time (PHT)
 - Western Indonesian Time (WIB)
@@ -35,6 +36,12 @@ For example, the +8 time zone also includes the following time zone names:
 ```csharp
 var service = new OfflineChinaDetectService();
 var result = await service.Detect(DetectionMethod.TimeZone);
+```
+
+For Hong Kong and Taiwan, you can configure the `includeHKTW` option to consider them as China. So that you won't go to jail for calling them a country in China.
+
+```csharp
+var result = await service.Detect(DetectionMethod.TimeZone, includeHKTW: true);
 ```
 
 #### By culture

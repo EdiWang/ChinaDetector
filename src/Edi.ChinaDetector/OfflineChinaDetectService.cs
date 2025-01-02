@@ -1,18 +1,17 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
-using System.Runtime.InteropServices;
 
 namespace Edi.ChinaDetector;
 
 public class OfflineChinaDetectService : IChinaDetectService
 {
-    public async Task<ChinaDetectResult> Detect(DetectionMethod method, RegionInfo regionInfo = null)
+    public async Task<ChinaDetectResult> Detect(DetectionMethod method, RegionInfo regionInfo = null, bool includeHKTW = false)
     {
         var result = new ChinaDetectResult { PositiveMethods = new() };
 
         if (method.HasFlag(DetectionMethod.TimeZone))
         {
-            var r1 = DetectByTimeZone(regionInfo?.TargetTimeZone);
+            var r1 = DetectByTimeZone(regionInfo?.TargetTimeZone, includeHKTW);
             result.Rank += r1;
 
             if (r1 > 0) result.PositiveMethods.Add(DetectionMethod.TimeZone);
@@ -45,7 +44,7 @@ public class OfflineChinaDetectService : IChinaDetectService
         return result;
     }
 
-    private static int DetectByTimeZone(TimeZoneInfo timeZone) => new TimeZoneChinaDetector(timeZone).Detect();
+    private static int DetectByTimeZone(TimeZoneInfo timeZone, bool includeHKTW) => new TimeZoneChinaDetector(timeZone, includeHKTW).Detect();
 
     private static async Task<int> DetectByCulture(CultureInfo culture = null, CultureInfo uiCulture = null) => await new CultureChinaDetector(culture, uiCulture).Detect();
 
